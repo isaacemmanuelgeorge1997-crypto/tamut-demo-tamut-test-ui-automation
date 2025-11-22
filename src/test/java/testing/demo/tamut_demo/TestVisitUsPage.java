@@ -1,51 +1,55 @@
 package testing.demo.tamut_demo;
 
-import static org.testng.Assert.assertTrue;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TestVisitUsPage {
 
-	private WebDriver driver;
-	private MainPage mainPage;
+    private WebDriver driver;
+    private VisitUsPage visitUsPage;
 
-	@BeforeClass
-	public void setupClass() {
-		System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
-	}
+    @BeforeClass
+    public void setUp() {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        visitUsPage = new VisitUsPage(driver);
+    }
 
-	@BeforeMethod
-	public void setup() {
-		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		mainPage = new MainPage(driver);
-		mainPage.open();
-	}
-	
-	@Test
-	public void testVisitUs() {
-		mainPage.hoverOverAbout();
-		mainPage.clickVisitUs();
-		VisitUsPage visitUsPage = new VisitUsPage(driver);
-		
-		assertTrue(visitUsPage.getUpcomingEventsLink().isDisplayed());
-	}
-	
+    @Test
+    public void testVisitUsLandingPage() {
+        driver.get("https://www.tamut.edu/visit/index.html");
+        Assert.assertTrue(visitUsPage.isLoaded(), "Visit Us landing page did not load.");
+    }
 
-	@AfterMethod
-	public void tearDown() {
-		driver.quit();
-	}
+    @Test
+    public void testUpcomingEventsPage() {
+        driver.get("https://visit.tamut.edu/");
+        Assert.assertTrue(driver.getCurrentUrl().equals("https://visit.tamut.edu/"),
+                "Upcoming Events page URL incorrect.");
+    }
 
-	@AfterClass
-	public void tearDownClass() {
-		System.out.println("All Visit Us tests completed.");
-	}
+    @Test
+    public void testCampusTourPage() {
+        driver.get("https://visit.tamut.edu/event/306201?p=dGFtdXQuZXZlbnRzLjMwNjIwMQ%3D%3D");
+        Assert.assertTrue(driver.getCurrentUrl().contains("306201"),
+                "Campus Tour page URL incorrect.");
+    }
 
+    @Test
+    public void testVirtualTourPage() {
+        driver.get("https://www.tamut.edu/visit/virtual-tour.html");
+        Assert.assertTrue(driver.getCurrentUrl().endsWith("/virtual-tour.html"),
+                "Virtual Tour page URL incorrect.");
+    }
+
+    @AfterClass
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
 }
