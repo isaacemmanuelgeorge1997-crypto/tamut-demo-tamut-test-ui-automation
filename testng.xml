@@ -1,0 +1,40 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="TAMUT Test Suite" verbose="1">
+
+  <!-- Visit Us Page Test -->
+  <test name="Visit Us">
+    <classes>
+      <class name="testing.demo.tamut_demo.TestVisitUsPage"/>
+    </classes>
+  </test>
+
+  <!-- Computer Science Page Test -->
+  <test name="Computer Science">
+    <classes>
+      <class name="testing.demo.tamut_demo.TestComputerScienceAndPages"/>
+    </classes>
+  </test>
+
+  <!-- Women for AM–Texarkana Test -->
+  <test name="Women TAMUT">
+    <classes>
+      <class name="testing.demo.tamut_demo.TestWomenPage"/>
+    </classes>
+  </test>
+
+  <!-- Alumni & Friends Test -->
+  <test name="Alumni  Friends">
+    <classes>
+      <class name="testing.demo.tamut_demo.TestAlumniFriendPage"/>
+    </classes>
+  </test>
+
+  <!-- Academic Programs Test -->
+  <test name="Academic Programs">
+    <classes>
+      <class name="testing.demo.tamut_demo.TestAcademicProgramsPage"/>
+    </classes>
+  </test>
+
+</suite>
